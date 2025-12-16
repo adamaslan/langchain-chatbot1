@@ -61,6 +61,10 @@ vendor/
 .env.test.local
 .env.production.local
 
+# GCP Service Account Keys #
+#############################
+config/gcp-key.json
+
 # Python #
 ##########
 __pycache__/

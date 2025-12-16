@@ -1,5 +1,16 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## ⚠️ Security Notice
+
+**This is a public repository.** Before deploying or contributing:
+
+- **NEVER commit secrets, API keys, or credentials**
+- Review [SECURITY.md](./docs/SECURITY.md) for best practices
+- Check [.gitignore](./.gitignore) to ensure sensitive files are excluded
+- Always use environment variables for sensitive configuration
+
+See [docs/SECURITY.md](./docs/SECURITY.md) for comprehensive security guidelines.
+
 ## Getting Started
 
 First, run the development server:

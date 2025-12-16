@@ -1,4 +1,9 @@
-# Services and Architecture Guide
+# Lang Chat Gem - Services and Architecture Guide
+
+**Project**: Lang Chat Gem  
+**Version**: 1.0  
+**Last Updated**: December 2025  
+**Stack**: Next.js 16, TypeScript, Firestore, Vertex AI, LangChain
 
 ## Table of Contents
 

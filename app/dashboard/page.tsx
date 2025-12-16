@@ -85,65 +85,65 @@ export default function Dashboard() {
         <h2 className="text-2xl font-bold mb-6">Stock Analysis Tester</h2>
 
         <div className="space-y-4">
-            {/* Symbol Input */}
-            <div>
-              <label className="block text-sm font-semibold mb-2">Stock Symbol</label>
-              <input
-                type="text"
-                value={symbol}
-                onChange={(e) => setSymbol(e.target.value.toUpperCase())}
-                onKeyPress={handleKeyPress}
-                placeholder="e.g., AAPL, MSFT, GOOGL"
-                className="w-full px-4 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-              />
-              <p className="text-xs text-slate-400 mt-1">Enter a valid stock ticker symbol</p>
+          {/* Symbol Input */}
+          <div>
+            <label className="block text-sm font-semibold mb-2">Stock Symbol</label>
+            <input
+              type="text"
+              value={symbol}
+              onChange={(e) => setSymbol(e.target.value.toUpperCase())}
+              onKeyPress={handleKeyPress}
+              placeholder="e.g., AAPL, MSFT, GOOGL"
+              className="w-full px-4 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            />
+            <p className="text-xs text-slate-400 mt-1">Enter a valid stock ticker symbol</p>
+          </div>
+
+          {/* Period Selection */}
+          <div>
+            <label className="block text-sm font-semibold mb-2">Data Period</label>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
+              {periods.map((p) => (
+                <button
+                  key={p}
+                  onClick={() => setPeriod(p)}
+                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    period === p
+                      ? "bg-blue-600 text-white"
+                      : "bg-slate-700 hover:bg-slate-600 text-slate-300"
+                  }`}
+                >
+                  {p}
+                </button>
+              ))}
             </div>
+          </div>
 
-            {/* Period Selection */}
-            <div>
-              <label className="block text-sm font-semibold mb-2">Data Period</label>
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
-                {periods.map((p) => (
-                  <button
-                    key={p}
-                    onClick={() => setPeriod(p)}
-                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      period === p
-                        ? "bg-blue-600 text-white"
-                        : "bg-slate-700 hover:bg-slate-600 text-slate-300"
-                    }`}
-                  >
-                    {p}
-                  </button>
-                ))}
-              </div>
+          {/* Error Display */}
+          {error && (
+            <div className="p-4 bg-red-500/10 border border-red-500/50 rounded-lg space-y-2">
+              <p className="text-red-400 text-sm">
+                <span className="font-semibold">Error:</span> {error}
+              </p>
+              <p className="text-red-300 text-xs">
+                💡 Tips:
+                <ul className="list-disc list-inside mt-1">
+                  <li>Verify the ticker symbol is correct (e.g., AAPL, MSFT)</li>
+                  <li>Try a different stock or ETF symbol</li>
+                  <li>Check that the symbol has trading data on Yahoo Finance</li>
+                </ul>
+              </p>
             </div>
+          )}
 
-            {/* Error Display */}
-            {error && (
-              <div className="p-4 bg-red-500/10 border border-red-500/50 rounded-lg space-y-2">
-                <p className="text-red-400 text-sm">
-                  <span className="font-semibold">Error:</span> {error}
-                </p>
-                <p className="text-red-300 text-xs">
-                  💡 Tips:
-                  <ul className="list-disc list-inside mt-1">
-                    <li>Verify the ticker symbol is correct (e.g., AAPL, MSFT)</li>
-                    <li>Try a different stock or ETF symbol</li>
-                    <li>Check that the symbol has trading data on Yahoo Finance</li>
-                  </ul>
-                </p>
-              </div>
-            )}
-
-            {/* Analyze Button */}
-            <button
-              onClick={handleAnalyze}
-              disabled={loading}
-              className="w-full py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-600 disabled:cursor-not-allowed rounded-lg font-semibold transition-colors mt-6"
-            >
-              {loading ? "Analyzing..." : "Analyze Stock"}
-            </button>
+          {/* Analyze Button */}
+          <button
+            onClick={handleAnalyze}
+            disabled={loading}
+            className="w-full py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-600 disabled:cursor-not-allowed rounded-lg font-semibold transition-colors mt-6"
+          >
+            {loading ? "Analyzing..." : "Analyze Stock"}
+          </button>
         </div>
 
         {/* Results */}

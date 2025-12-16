@@ -1,8 +1,19 @@
-# Installation Guide
+# Lang Chat Gem - Installation Guide
+
+**Project**: Lang Chat Gem  
+**Type**: AI-Powered Technical Analysis Platform  
+**Framework**: Next.js + TypeScript  
+**Cloud**: Google Cloud Platform (Firestore + Vertex AI)  
+**AI Engine**: LangChain + Gemini
 
 ## Overview
 
 Lang Chat Gem is an AI-powered technical analysis platform built with Next.js, Google Cloud services, and LangChain. This guide covers setup, configuration, and deployment.
+
+⚠️ **IMPORTANT - PUBLIC REPOSITORY**: This is a public repository. See [SECURITY.md](./SECURITY.md) for critical security practices including:
+- Never committing secrets or credentials
+- Managing API keys and service accounts safely
+- Deploying with proper environment variable configuration
 
 ## Prerequisites
 
@@ -43,11 +54,11 @@ This installs all required packages:
 
 ### 3.0 Quick Setup (All at Once)
 
-For project `ttb-lang1`, run these commands in sequence:
+Replace `YOUR_GCP_PROJECT_ID` and `YOUR_SERVICE_ACCOUNT_NAME` with your own values, then run these commands in sequence:
 
 ```bash
 # Set project context
-gcloud config set project ttb-lang1
+gcloud config set project YOUR_GCP_PROJECT_ID
 
 # Enable required APIs
 gcloud services enable firestore.googleapis.com
@@ -61,32 +72,32 @@ gcloud firestore databases create \
   --type=datastore-mode
 
 # Create service account
-gcloud iam service-accounts create lang-chat-gem \
-  --display-name="Lang Chat Gem Service Account"
+gcloud iam service-accounts create YOUR_SERVICE_ACCOUNT_NAME \
+  --display-name="Service Account for Lang Chat Gem"
 
 # Grant roles
-gcloud projects add-iam-policy-binding ttb-lang1 \
-  --member=serviceAccount:lang-chat-gem@ttb-lang1.iam.gserviceaccount.com \
+gcloud projects add-iam-policy-binding YOUR_GCP_PROJECT_ID \
+  --member=serviceAccount:YOUR_SERVICE_ACCOUNT_NAME@YOUR_GCP_PROJECT_ID.iam.gserviceaccount.com \
   --role=roles/datastore.user
 
-gcloud projects add-iam-policy-binding ttb-lang1 \
-  --member=serviceAccount:lang-chat-gem@ttb-lang1.iam.gserviceaccount.com \
+gcloud projects add-iam-policy-binding YOUR_GCP_PROJECT_ID \
+  --member=serviceAccount:YOUR_SERVICE_ACCOUNT_NAME@YOUR_GCP_PROJECT_ID.iam.gserviceaccount.com \
   --role=roles/aiplatform.user
 
 # Create and download JSON key
 mkdir -p ./config
 gcloud iam service-accounts keys create ./config/gcp-key.json \
-  --iam-account=lang-chat-gem@ttb-lang1.iam.gserviceaccount.com
+  --iam-account=YOUR_SERVICE_ACCOUNT_NAME@YOUR_GCP_PROJECT_ID.iam.gserviceaccount.com
 
 # Setup Firestore rules with Firebase CLI
 npm install -g firebase-tools
 firebase login --no-localhost
-firebase init firestore --project=ttb-lang1
-firebase deploy --only firestore:rules --project=ttb-lang1
+firebase init firestore --project=YOUR_GCP_PROJECT_ID
+firebase deploy --only firestore:rules --project=YOUR_GCP_PROJECT_ID
 
 echo "✅ Setup complete!"
 echo "Update .env.local with:"
-echo "  GCP_PROJECT_ID=ttb-lang1"
+echo "  GCP_PROJECT_ID=YOUR_GCP_PROJECT_ID"
 echo "  GOOGLE_APPLICATION_CREDENTIALS=./config/gcp-key.json"
 ```
 
@@ -98,8 +109,8 @@ echo "  GOOGLE_APPLICATION_CREDENTIALS=./config/gcp-key.json"
 
 Or via gcloud:
 ```bash
-gcloud projects create ttb-lang1 --name="TTB Language Chat"
-gcloud billing projects link ttb-lang1 --billing-account=YOUR_BILLING_ACCOUNT
+gcloud projects create YOUR_GCP_PROJECT_ID --name="Your Project Name"
+gcloud billing projects link YOUR_GCP_PROJECT_ID --billing-account=YOUR_BILLING_ACCOUNT
 ```
 
 ### 3.2 Enable Required APIs
@@ -184,19 +195,19 @@ ls -la ./config/gcp-key.json
 
 # List all keys
 gcloud iam service-accounts keys list \
-  --iam-account=lang-chat-gem@ttb-lang1.iam.gserviceaccount.com
+  --iam-account=YOUR_SERVICE_ACCOUNT_NAME@YOUR_GCP_PROJECT_ID.iam.gserviceaccount.com
 ```
 
 **Additional roles you might need:**
 ```bash
 # For Firestore read/write in development
-gcloud projects add-iam-policy-binding ttb-lang1 \
-  --member=serviceAccount:lang-chat-gem@ttb-lang1.iam.gserviceaccount.com \
+gcloud projects add-iam-policy-binding YOUR_GCP_PROJECT_ID \
+  --member=serviceAccount:YOUR_SERVICE_ACCOUNT_NAME@YOUR_GCP_PROJECT_ID.iam.gserviceaccount.com \
   --role=roles/editor  # Use sparingly in production
 
 # For Cloud Logging (optional, for debugging)
-gcloud projects add-iam-policy-binding ttb-lang1 \
-  --member=serviceAccount:lang-chat-gem@ttb-lang1.iam.gserviceaccount.com \
+gcloud projects add-iam-policy-binding YOUR_GCP_PROJECT_ID \
+  --member=serviceAccount:YOUR_SERVICE_ACCOUNT_NAME@YOUR_GCP_PROJECT_ID.iam.gserviceaccount.com \\
   --role=roles/logging.logWriter
 ```
 
@@ -215,7 +226,7 @@ cd lang-chat-gem
 firebase login --no-localhost
 
 # Initialize Firebase in your project
-firebase init firestore --project=ttb-lang1
+firebase init firestore --project=YOUR_GCP_PROJECT_ID
 
 # The firestore.rules file will be created
 # Update it with appropriate rules (see examples below)
@@ -224,7 +235,7 @@ firebase init firestore --project=ttb-lang1
 firebase deploy --only firestore:rules
 
 # Verify deployment (via gcloud)
-gcloud firestore databases list --project=ttb-lang1
+gcloud firestore databases list --project=YOUR_GCP_PROJECT_ID
 ```
 
 **Via Console:**
