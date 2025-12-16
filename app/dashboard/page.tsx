@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 
 interface AnalysisResult {
   symbol: string;
@@ -16,25 +16,12 @@ interface AnalysisResult {
   timestamp: string;
 }
 
-interface ChatMessage {
-  role: "user" | "assistant";
-  content: string;
-  timestamp: Date;
-}
-
 export default function Dashboard() {
   const [symbol, setSymbol] = useState("AAPL");
   const [period, setPeriod] = useState("1y");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<"analysis" | "chat">("analysis");
-
-  // Chat state
-  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
-  const [chatInput, setChatInput] = useState("");
-  const [chatLoading, setChatLoading] = useState(false);
-  const chatEndRef = useRef<HTMLDivElement>(null);
 
   const periods = ["1d", "5d", "1mo", "3mo", "6mo", "1y", "2y", "5y", "10y"];
 
@@ -73,13 +60,13 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
+    <div className="min-h-screen bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
       {/* Header */}
       <header className="border-b border-slate-700 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+              <h1 className="text-3xl font-bold bg-linear-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
                 Lang Chat Gem Dashboard
               </h1>
               <p className="text-slate-400 text-sm mt-1">Test API & Analyze Stocks</p>
@@ -95,11 +82,9 @@ export default function Dashboard() {
       </header>
 
       <div className="max-w-6xl mx-auto px-6 py-12">
-        {/* Analysis Form */}
-        <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-8 mb-8">
-          <h2 className="text-2xl font-bold mb-6">Stock Analysis Tester</h2>
+        <h2 className="text-2xl font-bold mb-6">Stock Analysis Tester</h2>
 
-          <div className="space-y-4">
+        <div className="space-y-4">
             {/* Symbol Input */}
             <div>
               <label className="block text-sm font-semibold mb-2">Stock Symbol</label>
@@ -159,7 +144,6 @@ export default function Dashboard() {
             >
               {loading ? "Analyzing..." : "Analyze Stock"}
             </button>
-          </div>
         </div>
 
         {/* Results */}
@@ -259,7 +243,7 @@ export default function Dashboard() {
                   📋 View Raw JSON Response
                 </summary>
                 <div className="mt-4 bg-slate-900 border border-slate-700 rounded-lg p-4 overflow-x-auto">
-                  <pre className="text-xs text-slate-300 whitespace-pre-wrap break-words">
+                  <pre className="text-xs text-slate-300 whitespace-pre-wrap wrap-break-word">
                     {JSON.stringify(result, null, 2)}
                   </pre>
                 </div>

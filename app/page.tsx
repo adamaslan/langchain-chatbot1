@@ -133,13 +133,13 @@ export default function Home() {
   const [expandedService, setExpandedService] = useState<number | null>(null);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
+    <div className="min-h-screen bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
       {/* Header */}
       <header className="border-b border-slate-700 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+              <h1 className="text-3xl font-bold bg-linear-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
                 Lang Chat Gem
               </h1>
               <p className="text-slate-400 text-sm mt-1">AI-Powered Technical Analysis Platform</p>
@@ -258,7 +258,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="bg-slate-900 rounded p-3 font-mono text-sm text-slate-300 text-xs">
+              <div className="bg-slate-900 rounded p-3 font-mono text-sm text-slate-300">
                 {endpoint.example}
               </div>
             </div>
