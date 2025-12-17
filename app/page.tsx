@@ -274,8 +274,8 @@ export default function Home() {
           <div className="bg-slate-900 rounded p-4 font-mono text-sm text-slate-300 mb-6 overflow-x-auto">
             <pre>{`{
   projectId: process.env.GCP_PROJECT_ID,
-  firestore: { database: "(default)", region: "us-central1" },
-  vertexAI: { location: "us-central1", modelId: "gemini-1.5-flash" },
+  firestore: { database: "(default)", region: "us-east4" },
+  vertexAI: { location: "us-east4", modelId: "gemini-2.5-flash" },
   ttl: {
     ohlcv: 86400,      // 1 day
     indicators: 7200,  // 2 hours
@@ -294,7 +294,7 @@ export default function Home() {
             </div>
             <div className="flex justify-between items-center bg-slate-900 p-3 rounded">
               <code className="text-cyan-400">VERTEX_AI_MODEL_ID</code>
-              <span className="text-slate-400">Model ID (e.g., gemini-1.5-flash)</span>
+              <span className="text-slate-400">Model ID (e.g., gemini-2.5-flash)</span>
             </div>
             <div className="flex justify-between items-center bg-slate-900 p-3 rounded">
               <code className="text-cyan-400">GOOGLE_APPLICATION_CREDENTIALS</code>
