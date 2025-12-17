@@ -18,11 +18,11 @@ export const GCP_CONFIG = {
   projectId: process.env.GCP_PROJECT_ID || "",
   firestore: {
     database: "(default)",
-    region: "us-central1",
+    region: "us-east4",
   },
   vertexAI: {
     location: "us-east4",
-    modelId: "gemini-2.5-flash",
+    modelId: "gemini-1.5-flash",
     maxTokens: 512,
   },
   ttl: {
