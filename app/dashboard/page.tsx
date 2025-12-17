@@ -45,7 +45,7 @@ export default function Dashboard() {
       }
 
       const data = await response.json();
-      setResult(data);
+      setResult(data.analysis);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
@@ -125,14 +125,14 @@ export default function Dashboard() {
               <p className="text-red-400 text-sm">
                 <span className="font-semibold">Error:</span> {error}
               </p>
-              <p className="text-red-300 text-xs">
-                💡 Tips:
+              <div className="text-red-300 text-xs">
+                <p>💡 Tips:</p>
                 <ul className="list-disc list-inside mt-1">
                   <li>Verify the ticker symbol is correct (e.g., AAPL, MSFT)</li>
                   <li>Try a different stock or ETF symbol</li>
                   <li>Check that the symbol has trading data on Yahoo Finance</li>
                 </ul>
-              </p>
+              </div>
             </div>
           )}
 
