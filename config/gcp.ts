@@ -22,7 +22,7 @@ export const GCP_CONFIG = {
   },
   vertexAI: {
     location: "us-east4",
-    modelId: "gemini-1.5-flash",
+    modelId: process.env.GCP_VERTEX_MODEL_ID || "gemini-1.5-flash",
     maxTokens: 512,
   },
   ttl: {
