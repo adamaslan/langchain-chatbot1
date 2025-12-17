@@ -36,6 +36,13 @@
 ehthumbs.db
 Thumbs.db
 
+# Next.js build output #
+########################
+.next
+.next/**
+out/
+dist/
+
 # IDEs and editors #
 ####################
 .idea/
@@ -60,6 +67,24 @@ vendor/
 .env.development.local
 .env.test.local
 .env.production.local
+
+# GCP Service Account Keys #
+#############################
+config/gcp-key.json
+config/*.json
+*.key
+*.pem
+*.crt
+*.p12
+*.p8
+
+# Additional secrets #
+######################
+.env*.local
+.env*.prod
+secrets.json
+**/secrets/**
+**/.secrets/**
 
 # Python #
 ##########

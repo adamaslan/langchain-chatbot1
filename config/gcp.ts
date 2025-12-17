@@ -1,0 +1,30 @@
+export const GCP_CONFIG = {
+  projectId: process.env.GCP_PROJECT_ID || "",
+  firestore: {
+    database: "(default)",
+    region: "us-central1",
+  },
+  vertexAI: {
+    location: "us-central1",
+    modelId: "gemini-1.5-flash",
+    maxTokens: 512,
+  },
+  ttl: {
+    ohlcv: 86400,
+    indicators: 7200,
+    signals: 3600,
+    analysis: 604800,
+    vertexCache: 172800,
+  },
+  limits: {
+    maxRequests: 50,
+    maxSymbols: 100,
+    batchSize: 20,
+    maxSignalsPerRequest: 100,
+    dailyAnalysisLimit: 500,
+  },
+  rateLimit: {
+    requestsPerMinute: 10,
+    requestsPerDay: 500,
+  },
+};
