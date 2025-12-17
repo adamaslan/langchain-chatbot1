@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error("Analysis error:", error);
-    const errorMsg = error instanceof Error ? error.message : "Analysis failed";
+    const errorMsg = process.env.NODE_ENV === 'development' && error instanceof Error ? error.message : "Analysis failed";
     return NextResponse.json(
       { error: errorMsg },
       { status: 500 }
