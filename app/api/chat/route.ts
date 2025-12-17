@@ -15,6 +15,7 @@ interface ChatRequest {
 }
 
 const chatInstances = new Map<string, TradingChatbot>();
+let cleanupInterval: NodeJS.Timeout | null = null;
 
 function getChatbot(userId: string): TradingChatbot {
   if (!chatInstances.has(userId)) {
@@ -23,24 +24,36 @@ function getChatbot(userId: string): TradingChatbot {
   return chatInstances.get(userId)!;
 }
 
-// Cleanup old instances (memory management)
-setInterval(() => {
-  if (chatInstances.size > 100) {
-    const entries = Array.from(chatInstances.entries());
-    const toDelete = entries.slice(0, 50);
-    toDelete.forEach(([userId]) => {
-      chatInstances.delete(userId);
-    });
-  }
-}, 300000); // Every 5 minutes
+// Initialize cleanup only once (prevent multiple intervals in dev)
+function initializeCleanup(): void {
+  if (cleanupInterval) return;
+
+  cleanupInterval = setInterval(() => {
+    if (chatInstances.size > 100) {
+      const entries = Array.from(chatInstances.entries());
+      const toDelete = entries.slice(0, 50);
+      toDelete.forEach(([userId]) => {
+        chatInstances.delete(userId);
+      });
+      console.log(`Cleaned up ${toDelete.length} chatbot instances`);
+    }
+  }, 300000); // Every 5 minutes
+
+  // Prevent interval from keeping process alive
+  cleanupInterval.unref?.();
+}
+
+// Call once on module load
+initializeCleanup();
 
 export async function POST(request: NextRequest) {
   try {
-    const body: ChatRequest = await request.json();
+    const body = await request.json() as ChatRequest;
 
-    if (!body.userId || !body.message) {
+    // Validate required fields
+    if (!body.userId?.trim() || !body.message?.trim()) {
       return NextResponse.json(
-        { error: "Missing userId or message" },
+        { error: "Missing or empty userId or message" },
         { status: 400 }
       );
     }
@@ -73,9 +86,9 @@ export async function GET(request: NextRequest) {
   try {
     const userId = request.nextUrl.searchParams.get("userId");
 
-    if (!userId) {
+    if (!userId?.trim()) {
       return NextResponse.json(
-        { error: "Missing userId" },
+        { error: "Missing or empty userId" },
         { status: 400 }
       );
     }
@@ -101,9 +114,9 @@ export async function DELETE(request: NextRequest) {
   try {
     const userId = request.nextUrl.searchParams.get("userId");
 
-    if (!userId) {
+    if (!userId?.trim()) {
       return NextResponse.json(
-        { error: "Missing userId" },
+        { error: "Missing or empty userId" },
         { status: 400 }
       );
     }

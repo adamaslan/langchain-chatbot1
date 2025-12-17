@@ -1,3 +1,19 @@
+import path from "path";
+
+// Resolve the credentials path at runtime
+if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
+  const credPath = process.env.GOOGLE_APPLICATION_CREDENTIALS;
+  
+  // If it's a relative path, resolve it from project root
+  if (!path.isAbsolute(credPath)) {
+    process.env.GOOGLE_APPLICATION_CREDENTIALS = path.resolve(
+      process.cwd(),
+      credPath
+    );
+  }
+}
+
+
 export const GCP_CONFIG = {
   projectId: process.env.GCP_PROJECT_ID || "",
   firestore: {
@@ -5,8 +21,8 @@ export const GCP_CONFIG = {
     region: "us-central1",
   },
   vertexAI: {
-    location: "us-central1",
-    modelId: "gemini-1.5-flash",
+    location: "us-east4",
+    modelId: "gemini-2.5-flash",
     maxTokens: 512,
   },
   ttl: {
